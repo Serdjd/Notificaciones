@@ -31,23 +31,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkNotificationPermission();
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        NotificationChannel channel = new NotificationChannel("MyChanelId", "MyChanel", NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel channel = new NotificationChannel("MyChanelId", "MyChanel", NotificationManager.IMPORTANCE_HIGH);
         notificationManager.createNotificationChannel(channel);
         findViewById(R.id.button).setOnClickListener(this);
     }
 
     private void throwNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"MyChanelId")
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle("Mi titulo")
                 .setContentText("Pulsame para ir a un enlace")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-
-            return;
-        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return;
         notificationManager.notify(1,builder.build());
     }
 
